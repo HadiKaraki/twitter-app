@@ -1,0 +1,114 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <link rel="stylesheet" href="/Post.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+
+    <body>
+        <section id="container-post">
+            <div class="post">
+                <% if(currentUser && post.author._id.equals(currentUser._id)) {%>
+                    <form action="/post/<%=post.author.username%>/<%=post._id%>?_method=DELETE" method="POST">
+                        <button id="delete-comment" class="delete-comment">Delete</button>
+                    </form>
+                    <% } %>
+                        <% if(post.author.profile.url>'') {%>
+                            <img src="<%=post.author.profile.url %>" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                            <% } else { %>
+                                <img src="../empty_profile.png" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                <% } %>%>
+                                    <p dir="auto" style="font-weight: bold; font-size: 1em; display: inline; margin-left: 10px;">
+                                        <%= post.author.name %>
+                                    </p>
+                                    <p dir="auto" style="margin-left: 50px; margin-top: 5px; opacity: 0.7; font-size: 0.9em;">
+                                        @
+                                        <%= post.author.username %>
+                                    </p>
+                                    <p dir="auto" class="body" style="margin-top: 40px; font-size: 1.6em;">
+                                        <%= post.body %>
+                                    </p>
+                                    <p style="opacity: 0.7; font-size: 0.9em;">
+                                        <%= post._id.getTimestamp()%>
+                                    </p>
+                                    <% if(post.images.length>0) {%>
+                                        <img src="<%= post.images[0].url %> " id="post-images">
+                                        <% } %>
+                                            <% if(likedOrNot) {%>
+                                                <button type="submit" id="likeBtn" style="display: inline; border: 0; background-color: white; cursor: pointer; color: red;" class="like-post" style="display: inline; cursor: pointer;"><i class="fa fa-heart-o"
+                                                        aria-hidden="true"></i></button>
+                                                <% } else {%>
+                                                    <button type="submit" id="likeBtn" style="display: inline; border: 0; background-color: white; cursor: pointer; color: black;" class="dislike-post"><i
+                                                            class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                                    <% } %>
+                                                        <p class="likes" id="likes-post" style="display: inline;">
+                                                            <%=post.likes%>
+                                                        </p>
+                                                        <p class="comments" style="display: inline;">
+                                                            <i class="fa fa-comment-o" aria-hidden="true" style="display: inline;"></i>
+                                                            <%= post.comments.length %>
+                                                        </p>
+            </div>
+        </section>
+        <% if( currentUser && !post.author._id.equals(currentUser._id)) {%>
+            <section id="container-reply">
+                <div class="reply">
+                    <% if(post.author.profile>'') {%>
+                        <img src="<%=currentUser.profile.url %>" class="profile-picture" style="margin-right: 10px;" align="left" width="500" height="600">
+                        <form action="/comment/new/<%= post._id %>" method="POST">
+                            <textarea type="text" placeholder="Tweet your reply" name="text" id="text"></textarea>
+                            <button id="submit-reply">Reply</button>
+                        </form>
+                        <% } %>
+                </div>
+            </section>
+            <% } %>
+                <% if(post.comments.length>0) { %>
+                    <% for(let comment of post.comments) { %>
+                        <section id="container-comment">
+                            <div class="comment">
+                                <a href="/user/<%= comment.author.username %>">
+                                    <% if(comment.author.profile.url>'') {%>
+                                        <img src="<%=comment.author.profile.url %>" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                        <% } else { %>
+                                            <img src="../empty_profile.png" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                            <% } %>
+                                </a>
+                                <p dir="auto" style="font-weight: bold; font-size: 1em; display: inline; margin-left: 10px;">
+                                    <%= comment.author.name %>
+                                </p>
+                                <p dir="auto" a style="margin-left: 2px; opacity: 0.7; display: inline; font-size: 0.9em;">
+                                    @
+                                    <%= comment.author.username %>
+                                </p>
+                                <p dir="auto" a style="margin-left: 55px; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+                                    Replying to @
+                                    <%= post.author.username %>
+                                </p>
+                                <p dir="auto" class="body" style="margin-top: 20px; font-size: 1.1em;">
+                                    <%= comment.body %>
+                                </p>
+                                <p class="likes" style="display: inline;">
+                                    <form action="/comment/like" method="POST" style="display: inline; margin: 0;">
+                                        <% if(likedOrNot) {%>
+                                            <button type="submit" id="like-comment" style="display: inline; border: 0; background-color: white; cursor: pointer; color: red;" onclick="heart2()" class="like-post" style="display: inline; cursor: pointer;"><i class="fa fa-heart-o"
+                                                aria-hidden="true"></i></button>
+                                            <% } else {%>
+                                                <button type="submit" id="like-comment" style="display: inline; border: 0; background-color: white; cursor: pointer; color: black;" onclick="heart2()" class="like-post" style="display: inline; cursor: pointer;"><i class="fa fa-heart-o"
+                                                    aria-hidden="true"></i></button>
+                                                <% } %>
+                                                    <% var comment_id=comment._id; %>
+                                    </form>
+                                    <%=comment.likes%>
+                                </p>
+                                <% if( currentUser && comment.author.equals(currentUser._id)) {%>
+                                    <form action="/comment/delete/<%=comment._id%>?_method=DELETE" method="POST">
+                                        <button id="delete-comment" class="delete-comment">Delete</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                        </section>
+                        <% } %>
+                            <% } %>
+                                <script src="/likeButton.js"></script>
+    </body>

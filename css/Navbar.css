@@ -1,0 +1,29 @@
+#search-box {
+    border-radius: 0px !important;
+    height: 30px !important;
+}
+
+#search_option {
+    margin-right: 8px;
+    cursor: pointer;
+    border-radius: 0px !important;
+    height: 30px !important;
+}
+
+#search-button {
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.nav-link:hover {
+    background-color: grey !important;
+}
+
+@media (max-width: 768px) {
+    #search-box {
+        width: 50%;
+    }
+}

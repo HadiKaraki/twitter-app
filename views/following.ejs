@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <link rel="stylesheet" href="/Following.css">
+        <title>following</title>
+    </head>
+
+    <body>
+        <% if(userFollowing.following.length>0) { %>
+            <% for(let following of userFollowing.following) {%>
+                <section id="container">
+                    <div class="following">
+                        <a href="/user/<%= following.username %>">
+                            <% if(following.profile.url>'') {%>
+                                <img src="<%=following.profile.url %>" class="profile-picture" style="display: inline; margin-right: 10px;" align="left" width="500" height="600">
+                                <% } else { %>
+                                    <img src="../empty_profile.png" class="profile-picture" style="display: inline; margin-right: 10px;" align="left" width="500" height="600">
+                                    <% } %>
+                        </a>
+                        <p style="font-weight: bold; font-size: 1em; margin-bottom: 0px;">
+                            <%= following.name %>
+                        </p>
+                        <p style="opacity: 0.7; font-size: 0.9em; margin-left: 50px;">
+                            @
+                            <%= following.username %>
+                        </p>
+                        <p dir="auto" class="biography" style="margin-top: 10px; margin-left: 55px; font-size: 1em;">
+                            <%= following.biography %>
+                        </p>
+                    </div>
+                </section>
+                <% } %>
+                    <% } else {%>
+                        <p>No following currrently.</p>
+                        <% } %>
+    </body>

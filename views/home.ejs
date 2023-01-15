@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="/Home.css">
+    </head>
+
+    <body>
+        <script>
+            const textbox = document.getElementById('text');
+            const btn = document.getElementById('button');
+            textbox.addEventListener('input', function activate() {
+                button.disabled = false
+            });
+        </script>
+        <% if(currentUser && currentUser.following.length>0) { %>
+            <% if(postsFollowing.length>0) {%>
+                <% for(let post of postsFollowing) {%>
+                    <div class="container">
+                        <a href="/post/<%= post.author.username %>/<%= post._id %>">
+                            <div class="card mb-3 ">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <%= post.author.username %>
+                                    </p>
+                                    <p class="card-text">
+                                        <%= post.body %>
+                                    </p>
+                                    <p>
+                                        likes:
+                                        <%=post.likes%>
+                                    </p>
+                                    <% if( currentUser && post.author.equals(currentUser._id)) {%>
+                                        <form action="/comment/<%=post._id%>/comment/<%=post._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                        <% } %>
+                                </div>
+                            </div>
+                    </div>
+                    </a>
+                    <% } %>
+                        <% } %>
+                            <% } %>
+    </body>

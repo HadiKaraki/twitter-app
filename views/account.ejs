@@ -1,0 +1,219 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <title>
+            <%= user.username %>
+        </title>
+        <link rel="stylesheet" href="/Account.css">
+        <link rel="stylesheet" href="/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+
+    <div id="overlay"></div>
+    <section id="container-cover">
+        <div class="cover">
+            <% if(user.cover_image && user.cover_image.url>'') {%>
+                <img src="<%= user.cover_image.url %>">
+                <% } else {%>
+                    <img src="../empty.png">
+                    <% } %>
+        </div>
+    </section>
+    <section id="container-profile">
+        <% if(user.profile.url>'') {%>
+            <img id="profile-image" src="<%= user.profile.url %>">
+            <% } else {%>
+                <img id="profile-image" src="/empty_profile.png">
+                <% } %>
+                    <div class="profile-panel">
+                        <% if(user._id.equals(currentUser._id)) { %>
+                            <!-- <button class="edit-profile" onclick="document.getElementById('edit_box').style.display='block'; document.getElementById('overlay').style.display='block'; document.body.style.overflow='hidden';">Edit
+                                profile</button> -->
+                            <form action="/user/profile">
+                                <button class="edit-profile">Edit profile</button>
+                            </form>
+                            <% } else {%>
+                                <% if(!user._id.equals(currentUser._id)) { %>
+                                    <% if(!following) { %>
+                                        <button id="follow-button" class="follow-button">Follow</button>
+                                        <% } else {%>
+                                            <button id="follow-button" class="follow-button">Unfollow</button>
+                                            <% } %>
+                                                <% } %>
+                                                    <% } %>
+                                                        <p style="font-weight: bold; font-size: 1.2em; margin-left: 10px; margin-top: 90px; margin-bottom: 5px;">
+                                                            <%= user.name %>
+                                                        </p>
+                                                        <p style="margin-left: 10px; opacity: 0.7; font-size: 0.9em; display: inline;">
+                                                            @
+                                                            <%= user.username %>
+                                                        </p>
+                                                        <% if(!user._id.equals(currentUser._id)) { %>
+                                                            <% if(follower) {%>
+                                                                <p style="margin-left: 10px; padding: 2px; opacity: 0.7; font-size: 0.8em; display: inline; background-color: #ebeced;">
+                                                                    Follows you
+                                                                </p>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <p style="margin-left: 10px; margin-top: 15px; font-size: 1.1em;">
+                                                                            <%= user.biography %>
+                                                                        </p>
+                                                                        <p style="margin-left: 8px; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+                                                                            <i class="fa-solid fa-location-dot"></i>
+                                                                            <%= user.location %>
+                                                                        </p>
+                                                                        <a href="/user/<%= user.username %>/following" style="display: inline;">
+                                                                            <p style="display: inline; margin-left: 8px; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+                                                                                <strong>
+                                                                                        <%= user.following.length %>
+                                                                                    </strong> Following
+                                                                            </p>
+                                                                        </a>
+                                                                        <a href="/user/<%= user.username %>/followers" style="display: inline;">
+                                                                            <p style="display: inline; margin-left: 8px; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+                                                                                <strong>
+                                                                                        <%= user.followers.length %>
+                                                                                    </strong> Followers
+                                                                            </p>
+                                                                        </a>
+                    </div>
+    </section>
+    <% if(currentUser && user._id.equals(currentUser._id)) {%>
+        <section id="container-tweet">
+            <div class="tweet">
+                <% if(user.profile.url>'') {%>
+                    <img src="<%=user.profile.url %>" class="profile-picture" style="display: inline; margin-right: 10px;" align="left" width="500" height="600">
+                    <% } else { %>
+                        <img src="/empty_profile.png" class="profile-picture" style="display: inline; margin-right: 10px;" align="left" width="500" height="600">
+                        <% } %>
+                            <form action="/post/new" method="POST" enctype="multipart/form-data">
+                                <button type="submit" id="submit-reply">Post</button>
+                                <textarea dir="auto" type="text" placeholder="Tweet" name="post[body]" id="body" autofocus required></textarea>
+                                <input type="file" id="image" name="image" style="display:none" />
+                                <button type="button" id="OpenImgUpload" style="border: 0; background-color: white; cursor: pointer;"><i
+                                            class="fa fa-upload" style="font-size:18px; margin-top: 10px;"></i>
+                                    Upload image</button>
+                            </form>
+                            <% } %>
+            </div>
+        </section>
+        <% if(user.pinned_post) {%>
+            <a href="/post/<%= user.username %>/<%= user.pinned_post._id %>">
+                <section id="container-post">
+                    <div class="post">
+                        <p>📌 Pinned tweet</p>
+                        <% if( (currentUser && user._id.equals(currentUser._id)) || (currentUser.admin)) {%>
+                            <form action="/post/<%=user.username%>/<%=user.pinned_post._id%>?_method=DELETE" method="POST">
+                                <button id="delete-post" class="delete-post">Delete
+                                post</button>
+                            </form>
+                            <% } %>
+                                <% if(user.profile.url>'') {%>
+                                    <img src="<%=user.profile.url %>" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                    <% } else { %>
+                                        <img src="/empty_profile.png" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                        <% } %>
+                                            <p style="font-weight: bold; font-size: 1em; display: inline; margin-left: 10px;">
+                                                <%= user.name %>
+                                            </p>
+                                            <p style="opacity: 0.7; font-size: 0.9em; display: inline;">
+                                                @
+                                                <%= user.username %>
+                                            </p>
+                                            <p dir="auto" id="post-body" style="margin-top: 40px; font-size: 1.1em;">
+                                                <%= user.pinned_post.body %>
+                                            </p>
+                                            <% if(user.pinned_post) {%>
+                                                <img src="<%= user.pinned_post.images[0].url %> " id="post-image">
+                                                <% } %>
+                                                    <p class="likes" style="display: inline;">
+                                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                        <%=user.pinned_post.likes%>
+                                                    </p>
+                                                    <p class="comments" style="display: inline;">
+                                                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                                        <%= user.pinned_post.comments.length %>
+                                                    </p>
+                                                    <% if(user._id.equals(currentUser._id)) {%>
+                                                        <p class="comments" style="display: inline;">
+                                                            <form action="/post/unpinpost/<%= user.pinned_post._id %>" method="POST">
+                                                                <button type="submit" style="border: 0; margin-top: 15px;">❌📌</button>
+                                                            </form>
+                                                        </p>
+                                                        <% } %>
+            </a>
+            </div>
+            </section>
+            <% } %>
+                <% for(let post of user.posts) { %>
+                    <a href="/post/<%= user.username %>/<%= post._id %>">
+                        <section id="container-post">
+                            <div id="post">
+                                <% if( (currentUser && user._id.equals(currentUser._id)) || (currentUser.admin)) {%>
+                                    <form action="/post/<%=user.username%>/<%=post._id%>?_method=DELETE" method="POST">
+                                        <button id="delete-post" class="delete-post">Delete
+                                        post</button>
+                                    </form>
+                                    <% } %>
+                                        <% if(user.profile.url>'') {%>
+                                            <img src="<%=user.profile.url %>" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                            <% } else { %>
+                                                <img src="../empty_profile.png" class="profile-picture" style="display: inline;" align="left" width="500" height="600">
+                                                <% } %>
+                                                    <p style="font-weight: bold; font-size: 1em; display: inline; margin-left: 10px;">
+                                                        <%= user.name %>
+                                                    </p>
+                                                    <p style="opacity: 0.7; font-size: 0.9em; display: inline;">
+                                                        @
+                                                        <%= user.username %>
+                                                    </p>
+                                                    <p dir="auto" id="post-body">
+                                                        <%= post.body %>
+                                                    </p>
+                                                    <% if(post.images.length>0) {%>
+                                                        <img src="<%= post.images[0].url %> " id="post-image">
+                                                        <% } %>
+                                                            <p class="likes" style="display: inline;">
+                                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                                <%=post.likes%>
+                                                            </p>
+                                                            <p class="comments" style="display: inline;">
+                                                                <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                                                <%= post.comments.length %>
+                                                            </p>
+                                                            <% if(!user.pinned_post && user._id.equals(currentUser._id)) {%>
+                                                                <p class="comments">
+                                                                    <form action="/post/pinpost/<%= post._id %>" method="POST">
+                                                                        <button type="submit" id="pinBtn">📌</button>
+                                                                    </form>
+                                                                </p>
+                                                                <% } %>
+                    </a>
+                    </div>
+                    </section>
+                    <div id="edit_box" style="display: none; overflow-y:scroll; background-color: white;">
+                        <div class="cover">
+                            <div class="close-button" style="background-color: white; height: 35px; width: 650px; position: fixed;">
+                                <button class="btn" onclick="document.getElementById('edit_box').style.display = 'none'; document.getElementById('overlay').style.display='none'; document.body.style.overflow='scroll';"><i
+                                    class="fa fa-close"></i></button>
+                            </div>
+                            <label for="file-input" style="margin-bottom: 0px">
+                            <% if(user.cover_image && user.cover_image.url>'') {%>
+                                <img src="../cover.jpg" style="cursor: pointer;">
+                                <% } %>
+                        </label>
+                        </div>
+                        <div class="profile-panel">
+                            <br>
+                            <form action="/user/profile" method="POST" enctype="multipart/form-data">
+                                <input type="file" class="form-file-input" id="image" name="image">
+                                <input type="text" placeholder="Name" id="name" name="name" style="height: 45px; width: 580px; margin-left: 30px; margin-top: 65px;"><br><br>
+                                <textarea type="text" placeholder="Bio" id="biography" name="biography" style="resize: none; padding-bottom: 70px; width: 580px; margin-left: 30px; border-radius: 10px;"></textarea><br><br>
+                                <input type="text" placeholder="Location" id="location" name="location" style="height: 45px; width: 580px; margin-left: 30px;"><br><br>
+                                <button type="submit" id="save-button">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                        <script src="/Scripts.js"></script>
+                        <script src="/lazy.js"></script>

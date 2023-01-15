@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <title>Register</title>
+    </head>
+
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="card shadow">
+                    <img src="/Social_media.png" alt="" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">Register</h5>
+                        <a href="/user/login" stlye="display: inline; float: right;">Login</a>
+                        <form id="form" action="/user/register" method="POST" enctype="multipart/form-data">
+                            <div class="alert alert-danger" role="alert" style="display: none;" id="alertUsername">
+                                Username already exists
+                                <button type="button" style="border: 0; float: right;" id="closeUserBtn">x</button>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Username</label>
+                                <input class="form-control" type="text" id="username" name="user[username]" required autofocus>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Name</label>
+                                <input class="form-control" type="text" id="name" name="user[name]" required autofocus>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" role="alert" style="display: none;" id="alertEmail">
+                                Email already taken
+                                <button type="button" style="border: 0; float: right;" id="closeEmailBtn">x</button>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" id="email" name="user[email]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="password" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-file custom-file">
+                                    <input type="file" class="form-file-input" id="image" name="image">
+                                    <label class="form-file-label" for="image">
+                                        <span class="form-file-text custom-file-label">Choose image</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button id="submitButton" class="btn btn-dark btn-block">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/verify.js"></script>

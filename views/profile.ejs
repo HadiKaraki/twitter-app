@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate')%>
+
+    <head>
+        <title>Edit profile</title>
+        <link rel="stylesheet" href="/Profile.css">
+    </head>
+
+    <section id="container-cover">
+        <div class="cover">
+            <% if(currentUser.cover_image && currentUser.cover_image.url>'') {%>
+                <img src="<%= currentUser.cover_image.url %>">
+                <% } else {%>
+                    <img src="/empty.png">
+                    <% } %>
+        </div>
+    </section>
+    <section id="container">
+        <div class="profile-panel">
+            <br>
+            <form action="/user/profile" method="POST" enctype="multipart/form-data">
+                <label for="nameOfUser">Name</label>
+                <input type="text" placeholder="Name" id="nameOfUser" name="user[name]" value="<%= currentUser.name %>">
+                <br><br>
+                <label for="biography">Biography</label>
+                <input type="text" placeholder="Bio" id="biography" name="user[biography]" value="<%= currentUser.biography %>">
+                <br><br>
+                <label for="location">Location</label>
+                <input type="text" placeholder="Location" id="location" name="user[location]" value="<%= currentUser.location %>">
+                <br><br>
+                <% if(currentUser.cover_image.url>'') {%>
+                    <label for="removeCover">Delete cover?</label>
+                    <input type="checkbox" id="removeCover" name="removeCover" value="<%=currentUser.cover_image.filename%>">
+                    <% } else {%>
+                        <label for="location">Add cover</label>
+                        <input type="file" class="form-file-input" id="image" name="image">
+                        <% } %>
+                            <button type="submit" id="save-button">Save</button>
+            </form>
+        </div>
+    </section>

@@ -1,0 +1,127 @@
+body {
+    margin-bottom: 60px;
+    background-color: #edede9;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+#container-post,
+#container-comment {
+    background-color: white;
+    margin: auto;
+    width: 80%;
+    border-top: 0.4px solid black;
+    border-left: 0.8px solid black;
+    border-right: 0.8px solid black;
+    border-bottom: 0.4px solid black;
+    display: flex;
+    flex-direction: row;
+}
+
+#container-comment {
+    padding: 10px;
+}
+
+#container-post div,
+#container-comment div {
+    background-color: white;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    line-height: 1;
+    position: relative;
+}
+
+#container-reply div {
+    width: 80%;
+    margin: auto;
+}
+
+.post #post-images {
+    max-width: 60%;
+    max-height: 60%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    object-fit: cover;
+}
+
+.reply {
+    border-left: 0.8px solid black;
+    border-right: 0.px solid black;
+    border-bottom: 0.8px solid black;
+}
+
+#text {
+    margin: 0;
+    width: 100%;
+    padding-bottom: 10px;
+    vertical-align: bottom;
+    box-sizing: border-box;
+    resize: none;
+    border-top: 0.4px solid black;
+    border-left: 0.4px solid black;
+    border-right: 0.4px solid black;
+    border-bottom: 0.4px solid black;
+}
+
+#text:focus {
+    outline: none;
+}
+
+#submit-reply {
+    font-weight: bold;
+    color: white;
+    padding: 11px;
+    border-radius: 20px;
+    background-color: #1DA1F2;
+    border: 0.5px solid #1DA1F2;
+    transition: 0.25s;
+}
+
+#submit-reply:hover {
+    transition: 0.25s;
+    background-color: #15252f;
+    border: 0.5px solid #1e9eee;
+}
+
+#delete-comment {
+    float: right;
+    font-family: sans-serif;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    padding: 8px 18px 8px 18px;
+    transition: 0.25s;
+}
+
+#delete-comment:hover {
+    background-color: #4a4947;
+    border-color: #4a4947;
+    transition: 0.25s;
+}
+
+.profile-picture {
+    background-size: cover;
+    border-radius: 50% 50% 50% 50%;
+    border-top: 0.7px solid black;
+    border-right: 0.7px solid black;
+    border-bottom: 0.7px solid black;
+    border-left: 0.7px solid black;
+    width: 45px;
+    height: 45px
+}
+
+#cover-image {
+    max-width: 50%;
+    height: auto;
+}
+
+@media (min-width: 950px),
+screen and (orientation: portrait) {
+    #text {
+        width: 65%;
+    }
+}

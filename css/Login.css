@@ -1,0 +1,19 @@
+body {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.login {
+    background-color: white;
+    border: 1px solid;
+    border-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    width: 50%;
+    margin-top: 7%;
+    margin-left: 25%;
+    font-size: large;
+}

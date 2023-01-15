@@ -1,0 +1,128 @@
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    background-color: #edede9;
+    margin-bottom: 60px;
+}
+
+.cover {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 230px;
+    overflow: hidden;
+}
+
+.cover img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover>input {
+    display: none;
+}
+
+#container-cover,
+#container {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+}
+
+#container-cover div,
+#container div {
+    padding: 10px;
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    font-family: Helvetica, sans-serif;
+    line-height: 1;
+    position: relative;
+}
+
+label {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#nameOfUser,
+#biography,
+#location {
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 13px;
+    vertical-align: bottom;
+    box-sizing: border-box;
+    border-top: 0.2px solid black;
+    border-left: 0.2px solid black;
+    border-right: 0.2px solid black;
+    border-bottom: 0.2px solid black;
+}
+
+#container textarea {
+    resize: none;
+    width: 100%;
+    padding: 10px;
+    font-family: Helvetica, sans-serif;
+    line-height: 1;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.profile-picture {
+    background-size: cover;
+    border-radius: 50% 50% 50% 50%;
+    width: 45px;
+    height: 45px
+}
+
+#save-button {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    padding: 8px 18px 8px 18px
+}
+
+#save-button:hover {
+    background-color: #4a4947;
+    border-color: #4a4947;
+}
+
+#back-button {
+    float: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    padding: 8px 18px 8px 18px
+}
+
+#back-button:hover {
+    background-color: #4a4947;
+    border-color: #4a4947;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
